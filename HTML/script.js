@@ -21,7 +21,7 @@ function newElement() {
     let t = document.createTextNode(inputValue);
     li.appendChild(t);
     if(inputValue == "") {
-       alert("Введите ваше дело!");
+       alert("Please, enter the text!");
     } else {
        document.getElementById('list').appendChild(li); 
     }
@@ -38,41 +38,3 @@ function deleteElement() { this.parentNode.remove(); }
 
 liDelete = document.createElement('li');
 liDelete.innerHTML = `<button class="idList">Удалить</button>`;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
