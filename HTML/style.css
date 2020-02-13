@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-.wrapper {width: 70%; margin: 0 auto}
+.wrapper {width: 80%; padding: 10px; margin: auto}
 ol {
     margin: 0;
     padding: 0;
