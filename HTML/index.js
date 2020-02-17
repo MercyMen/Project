@@ -1,15 +1,15 @@
-"use strict"
-var addButton = document.getElementById('add');
-var inputTask = document.getElementById('new-task');
-var unfinishedTasks = document.getElementById('unfinished-tasks');
-var finishedTasks = document.getElementById('finished-tasks');
-
+'use strict';
+const addButton = document.getElementById('add');
+const inputTask = document.getElementById('new-task');
+const unfinishedTasks = document.getElementById('unfinished-tasks');
+const finishedTasks = document.getElementById('finished-tasks');
+const pattern = /^[\s]+$/;
 
 
 
 function createNewElement(task, finished) {
-    var listItem = document.createElement('li');
-    var checkbox = document.createElement('button');
+    const listItem = document.createElement('li');
+    const checkbox = document.createElement('button');
 
     if(finished){
         checkbox.className = "material-icons checkbox";
@@ -20,14 +20,14 @@ function createNewElement(task, finished) {
     }
 
 
-    var label = document.createElement('label');
+    const label = document.createElement('label');
     label.innerText = task;
-    var input = document.createElement('input');
+    const input = document.createElement('input');
     input.type = "text";
-    var editButton = document.createElement('button');
+    const editButton = document.createElement('button');
     editButton.className = "material-icons edit";
     editButton.innerHTML = "<i class='material-icons'>edit</i>";
-    var deleteButton = document.createElement('button');
+    const deleteButton = document.createElement('button');
     deleteButton.className = "material-icons delete";
     deleteButton.innerHTML = "<i class='material-icons'>delete</i>";
 
@@ -47,8 +47,13 @@ document.getElementById('new-task').addEventListener('keyup', function(e) {
 });
 
 function addTask() {
-        if (inputTask.value) {
-        var listItem = createNewElement(inputTask.value, false);
+        if (pattern.test(inputTask.value)) {
+        alert ('ВВЕДИТЕ ДЕЛО, А НЕ ПУСТУЮ СТРОКУ!');
+        } else if (inputTask.value === '') {
+            alert('ВВЕДИТЕ ВАШУ ЗАДАЧУ!');
+        } else if (inputTask.value) {
+        console.log(inputTask.value.length);
+        const listItem = createNewElement(inputTask.value, false);
         unfinishedTasks.appendChild(listItem);
         bindTaskEvents(listItem, finishTask)
         inputTask.value = "";
@@ -58,38 +63,43 @@ function addTask() {
 addButton.onclick = addTask;
 
 function deleteTask() {
-    var listItem = this.parentNode;
-    var ul = listItem.parentNode;
+    const listItem = this.parentNode;
+    const ul = listItem.parentNode;
     ul.removeChild(listItem);
     save();
 }
 
 function editTask() {
-    console.log(2);
-    var editButton = this;
-    var listItem = this.parentNode;
-    var label = listItem.querySelector('label');
-    var input = listItem.querySelector('input[type=text]');
-
-    var containsClass = listItem.classList.contains('editMode');
-
+    const pattern = /^[\s]+$/;
+    const editButton = this;
+    const listItem = this.parentNode;
+    const label = listItem.querySelector('label');
+    const input = listItem.querySelector('input[type=text]');
+    
+    const containsClass = listItem.classList.contains('editMode');
+    
     if (containsClass) {
-        label.innerText = input.value;
-        editButton.className = "material-icons edit";
-        editButton.innerHTML = "<i class='material-icons'>edit</i>";
-        save();
+        if (pattern.test(input.value)) {
+            alert ('ПОЖАЛУЙСТА, НЕ ОСТАВЛЯЙТЕ ЗАДАЧУ ПУСТОЙ!');
+        } else if (input.value === '') {
+            alert('ВЫ ЗАБЫЛИ ПЕРЕПИСАТЬ ДЕЛО!');
+        } else {
+            label.innerText = input.value;
+            editButton.className = "material-icons edit";
+            editButton.innerHTML = "<i class='material-icons'>edit</i>";
+            save();
+        }
     } else {
         input.value = label.innerText;
         editButton.className = "material-icons save";
         editButton.innerHTML = "<i class='material-icons'>save</i>";
-
     }
     listItem.classList.toggle('editMode');
 }
 
 function finishTask() {
-    var listItem = this.parentNode;
-    var checkbox = listItem.querySelector('button.checkbox');
+    const listItem = this.parentNode;
+    const checkbox = listItem.querySelector('button.checkbox');
     checkbox.className = "material-icons checkbox";
     checkbox.innerHTML = "<i class='material-icons'>check_box</i>";
     finishedTasks.appendChild(listItem);
@@ -98,8 +108,8 @@ function finishTask() {
 }
 
 function unfinishTask() {
-    var listItem = this.parentNode;
-    var checkbox = listItem.querySelector('button.checkbox');
+    const listItem = this.parentNode;
+    const checkbox = listItem.querySelector('button.checkbox');
     checkbox.className = "material-icons checkbox";
     checkbox.innerHTML = "<i class='material-icons'>check_box_outline_blank</i>";
 
@@ -109,9 +119,9 @@ function unfinishTask() {
 }
 
 function bindTaskEvents(listItem, checkboxEvent) {
-    var checkbox = listItem.querySelector('button.checkbox');
-    var editButton = listItem.querySelector('button.edit');
-    var deleteButton = listItem.querySelector('button.delete');
+    const checkbox = listItem.querySelector('button.checkbox');
+    const editButton = listItem.querySelector('button.edit');
+    const deleteButton = listItem.querySelector('button.delete');
 
     checkbox.onclick = checkboxEvent;
     editButton.onclick = editTask;
@@ -120,13 +130,13 @@ function bindTaskEvents(listItem, checkboxEvent) {
 }
 function save() {
 
-    var unfinishedTasksArr = [];
-    for (var i = 0; i < unfinishedTasks.children.length; i++) {
+    let unfinishedTasksArr = [];
+    for (let i = 0; i < unfinishedTasks.children.length; i++) {
         unfinishedTasksArr.push(unfinishedTasks.children[i].getElementsByTagName('label')[0].innerText);
     }
 
-    var finishedTasksArr = [];
-    for (var i = 0; i < finishedTasks.children.length; i++) {
+    let finishedTasksArr = [];
+    for (let i = 0; i < finishedTasks.children.length; i++) {
         finishedTasksArr.push(finishedTasks.children[i].getElementsByTagName('label')[0].innerText);
     }
 
@@ -142,16 +152,16 @@ function load(){
     return JSON.parse(localStorage.getItem('todo'));
 }
 
-var data=load();
+const data=load();
 
-for(var i=0; i<data.unfinishedTasks.length;i++){
-    var listItem=createNewElement(data.unfinishedTasks[i], false);
+for(let i=0; i<data.unfinishedTasks.length;i++){
+    const listItem=createNewElement(data.unfinishedTasks[i], false);
     unfinishedTasks.appendChild(listItem);
     bindTaskEvents(listItem, finishTask);
 }
 
-for(var i=0; i<data.finishedTasks.length; i++){
-    var listItem=createNewElement(data.finishedTasks[i], true);
+for(let i=0; i<data.finishedTasks.length; i++){
+    const listItem=createNewElement(data.finishedTasks[i], true);
     finishedTasks.appendChild(listItem);
     bindTaskEvents(listItem, unfinishTask);
 }
