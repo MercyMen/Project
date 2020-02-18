@@ -3,7 +3,6 @@ const addButton = document.getElementById('add');
 const inputTask = document.getElementById('new-task');
 const unfinishedTasks = document.getElementById('unfinished-tasks');
 const finishedTasks = document.getElementById('finished-tasks');
-const pattern = /^[\s]+$/;
 
 
 
@@ -47,12 +46,9 @@ document.getElementById('new-task').addEventListener('keyup', function(e) {
 });
 
 function addTask() {
-        if (pattern.test(inputTask.value)) {
+    if (inputTask.value.trim() === '') {
         alert ('ВВЕДИТЕ ДЕЛО, А НЕ ПУСТУЮ СТРОКУ!');
-        } else if (inputTask.value === '') {
-            alert('ВВЕДИТЕ ВАШУ ЗАДАЧУ!');
-        } else if (inputTask.value) {
-        console.log(inputTask.value.length);
+    } else if (inputTask.value) {
         const listItem = createNewElement(inputTask.value, false);
         unfinishedTasks.appendChild(listItem);
         bindTaskEvents(listItem, finishTask)
@@ -70,7 +66,6 @@ function deleteTask() {
 }
 
 function editTask() {
-    const pattern = /^[\s]+$/;
     const editButton = this;
     const listItem = this.parentNode;
     const label = listItem.querySelector('label');
@@ -79,10 +74,8 @@ function editTask() {
     const containsClass = listItem.classList.contains('editMode');
     
     if (containsClass) {
-        if (pattern.test(input.value)) {
-            alert ('ПОЖАЛУЙСТА, НЕ ОСТАВЛЯЙТЕ ЗАДАЧУ ПУСТОЙ!');
-        } else if (input.value === '') {
-            alert('ВЫ ЗАБЫЛИ ПЕРЕПИСАТЬ ДЕЛО!');
+        if (input.value.trim() === '') {
+            alert ('При редактировании задачи вы не ввели текст!');
         } else {
             label.innerText = input.value;
             editButton.className = "material-icons edit";
