@@ -135,7 +135,7 @@ li > input[type="checkbox"] {
 li > label {
     font-size: 18px;
     line-height: 40px;
-    width: 237px;
+    width: 80%;
     padding: 1px 0 0 11px
 }
 
