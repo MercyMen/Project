@@ -48,6 +48,7 @@ document.getElementById('new-task').addEventListener('keyup', function(e) {
 function addTask() {
     if (inputTask.value.trim() === '') {
         alert ('ВВЕДИТЕ ДЕЛО, А НЕ ПУСТУЮ СТРОКУ!');
+        inputTask.value = '';
     } else if (inputTask.value) {
         const listItem = createNewElement(inputTask.value, false);
         unfinishedTasks.appendChild(listItem);
